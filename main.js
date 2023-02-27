@@ -1,52 +1,107 @@
 import * as THREE from 'https://threejs.org/build/three.module.js'
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var renderer, scene, camera, composer, circle, skelet, particle;
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
-
-const geometry = new THREE.TorusGeometry( 5, 2, 500, 500);
-const material = new THREE.MeshStandardMaterial( { color: 0xa77ee} );
-const torus = new THREE.Mesh( geometry, material );
-scene.add(torus);
-
-const pointLight = new THREE.PointLight(0xffffff)
-pointLight.position.set(0,0,20)
-
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight, ambientLight)
-
-const lightHelper = new THREE.PointLightHelper(pointLight)
-scene.add(lightHelper)
-
-const gridHelper = new THREE.GridHelper(200,50)
-scene.add(gridHelper)
-
-function addStar(){
-    const geometry = new THREE.SphereGeometry(0.1, 20, 20);
-    const material = new THREE.MeshStandardMaterial({color: 0xffffff} );
-    const star = new THREE.Mesh(geometry, material);
-
-    const [x,y,z] = Array(3).fill().map(()=> THREE.MathUtils.randFloatSpread(100));
-
-    star.position.set(x,y,z);
-    scene.add(star)
+window.onload = function() {
+  init();
+  animate();
 }
 
-Array(200).fill().forEach(addStar);
-const color2 = new THREE.Color(0xff0000);
-scene.background = color2;
+function init() {
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio((window.devicePixelRatio) ? window.devicePixelRatio : 1);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.autoClear = false;
+  renderer.setClearColor(0x000000, 0.0);
+  document.getElementById('canvas').appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+  camera.position.z = 400;
+  scene.add(camera);
+
+  circle = new THREE.Object3D();
+  skelet = new THREE.Object3D();
+  particle = new THREE.Object3D();
+
+  scene.add(circle);
+  scene.add(skelet);
+  scene.add(particle);
+
+  var geometry = new THREE.TetrahedronGeometry(2, 1);
+  var geom = new THREE.IcosahedronGeometry(10, 0);
+  var geom2 = new THREE.IcosahedronGeometry(20, 1);
+
+  var material = new THREE.MeshPhongMaterial({
+    color: 0x111111,
+    wireframe: true,
+    shading: THREE.FlatShading
+  });
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar(90 + (Math.random() * 700));
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle.add(mesh);
+  }
+
+  var mat = new THREE.MeshPhongMaterial({
+    color: 0x111111,
+    shading: THREE.FlatShading
+  });
+
+  var mat2 = new THREE.MeshPhongMaterial({
+    color: 0x111111,
+    wireframe: true,
+    side: THREE.DoubleSide
+
+  });
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  circle.add(planet);
+
+  var planet2 = new THREE.Mesh(geom2, mat2);
+  planet2.scale.x = planet2.scale.y = planet2.scale.z = 10;
+  skelet.add(planet2);
+
+  var ambientLight = new THREE.AmbientLight(0xffffff );
+  scene.add(ambientLight);
+  
+  var lights = [];
+lights[0] = new THREE.DirectionalLight( 0xffffff, 1 );
+lights[0].position.set( 1, 0, 0 );
+lights[1] = new THREE.DirectionalLight( 0xdddddd, 1 );
+lights[1].position.set( 0.75, 1, 0.5 );
+lights[2] = new THREE.DirectionalLight( 0xffffff, 1 );
+lights[2].position.set( -0.75, -1, 0.5 );
+scene.add( lights[0] );
+scene.add( lights[1] );
+scene.add( lights[2] );
+  
+
+  window.addEventListener('resize', onWindowResize, false);
+
+};
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
 
 function animate() {
-	requestAnimationFrame( animate );
-    camera.position.x += .001;
-    camera.position.y += .001;
-    camera.position.z += .05;
-    torus.rotation.y += 0.01;
-    torus.rotation.x -= 0.1;
+  requestAnimationFrame(animate);
 
-	renderer.render( scene, camera );
-}
-animate();
+  particle.rotation.x += 0.0010;
+  particle.rotation.y -= 0.0100;
+  circle.rotation.x -= 0.0200;
+  circle.rotation.y -= 0.0200;
+  skelet.rotation.x -= 0.0100;
+  skelet.rotation.y += 0.0020;
+  renderer.clear();
+
+  renderer.render( scene, camera )
+};
