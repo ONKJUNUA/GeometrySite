@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejs.org/build/three.module.js'
 
-var renderer, scene, camera, composer, circle, skelet, torus, torus2, particle, p1, p2, p3;
+var renderer, scene, camera, composer, circle, skelet, torus, torus2, particle,particle2,particle3,particle4,particle5, p1, p2, p3;
 
 window.onload = function() {
   init();
@@ -27,25 +27,41 @@ function init() {
   torus2 = new THREE.Object3D();
   skelet = new THREE.Object3D();
   particle = new THREE.Object3D();
+  particle2 = new THREE.Object3D();
+  particle3 = new THREE.Object3D();
+  particle4 = new THREE.Object3D();
+  particle5 = new THREE.Object3D();
   p1 = new THREE.Object3D();
   p2 = new THREE.Object3D();
   p3 = new THREE.Object3D();
 
-  torus.position.z=700
-  torus2.position.z=700
+  torus.position.z=1000
+  torus2.position.z=1000
   torus.position.x=-600
   torus2.position.x=-600
+  particle2.position.z=1000
 
-  p1.position.z=1600
+  p1.position.z=1800
+  p1.rotation.x=1.5
+  particle3.position.z=1800
 
-  p2.position.z=2400
+  p2.position.z=2600
   p2.position.x=-600
+  particle4.position.z=2600
 
-  p3.position.z=3600
+  p3.position.z=3400
+  particle5.position.z=3400
 
   scene.add(circle);
   scene.add(skelet);
+
   scene.add(particle);
+  scene.add(particle2);
+  scene.add(particle3);
+  scene.add(particle4);
+  scene.add(particle5);
+
+
   scene.add(torus);
   scene.add(torus2);
 
@@ -59,6 +75,7 @@ function init() {
   var geom3 = new THREE.TorusGeometry(15, 2, 6, 50);
   var geom4 = new THREE.TorusGeometry(12, 1, 10, 50);
   var goem5 = new THREE.SphereGeometry(5, 15, 5);
+  var goem6 = new THREE.TorusGeometry(10, 10, 30, 30);
 
 
   var material = new THREE.MeshPhongMaterial({
@@ -70,9 +87,41 @@ function init() {
   for (var i = 0; i < 1000; i++) {
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-    mesh.position.multiplyScalar(90 + (Math.random() * 1000));
+    mesh.position.multiplyScalar((90+Math.random() * 1000));
     mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
     particle.add(mesh);
+  }
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar((90+Math.random() * 1000));
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle2.add(mesh);
+  }
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar((90+Math.random() * 1000));
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle3.add(mesh);
+  }
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar((90+Math.random() * 1000));
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle4.add(mesh);
+  }
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar((90+Math.random() * 1000));
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle5.add(mesh);
   }
 
   var mat = new THREE.MeshPhongMaterial({
@@ -155,8 +204,16 @@ function init() {
   planet2.scale.x = planet2.scale.y = planet2.scale.z = 10;
   skelet.add(planet2);
 
-  var planet = new THREE.Mesh(geom, mat);
+  var planet = new THREE.Mesh(goem6, mat2);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  p1.add(planet);
+  
+  var planet = new THREE.Mesh(geom3, mat2);
+  planet.scale.x = planet.scale.y = planet.scale.z = 10;
+  p1.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
   p1.add(planet);
 
   var planet = new THREE.Mesh(geom, mat);
@@ -195,6 +252,15 @@ function animate() {
 
   particle.rotation.x += 0.0010;
   particle.rotation.y -= 0.0100;
+  particle2.rotation.x += 0.0010;
+  particle2.rotation.y -= 0.0100;
+  particle3.rotation.x += 0.0010;
+  particle3.rotation.y -= 0.0100;
+  particle4.rotation.x += 0.0010;
+  particle4.rotation.y -= 0.0100;
+  particle5.rotation.x += 0.0010;
+  particle5.rotation.y -= 0.0100;
+
   circle.rotation.y -= 0.0020;
   circle.rotation.x -= 0.0010;
   circle.rotation.z -= 0.0030;
@@ -205,6 +271,7 @@ function animate() {
   torus2.rotation.x += 0.0200;
   torus2.rotation.y -= 0.0200;
   torus2.rotation.z -= 0.0100;
+  p1.rotation.z -= 0.0200;
   renderer.clear();
 
   renderer.render( scene, camera )
@@ -213,6 +280,8 @@ function animate() {
 function moveCamera(){
   const t = document.body.getBoundingClientRect().top;
   camera.position.z=-t*0.5+600;
+  camera.rotation.y=t*0.000;
+  torus2.rotation.x += 0.0200;
 }
 
 document.body.onscroll= moveCamera
