@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejs.org/build/three.module.js'
 
-var renderer, scene, camera, composer, circle, skelet, torus, particle;
+var renderer, scene, camera, composer, circle, skelet, torus, torus2, particle;
 
 window.onload = function() {
   init();
@@ -18,24 +18,31 @@ function init() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
-  camera.position.z = 500;
+  camera.position.z = 600;
   camera.position.x = -300;
   scene.add(camera);
 
   circle = new THREE.Object3D();
   torus = new THREE.Object3D();
+  torus2 = new THREE.Object3D();
   skelet = new THREE.Object3D();
   particle = new THREE.Object3D();
+
+  torus.position.x=-600
+  torus2.position.x=-600
 
   scene.add(circle);
   scene.add(skelet);
   scene.add(particle);
   scene.add(torus);
+  scene.add(torus2);
 
   var geometry = new THREE.TetrahedronGeometry(1, 1);
   var geom = new THREE.IcosahedronGeometry(10, 0);
   var geom2 = new THREE.IcosahedronGeometry(20, 1);
-  var geom3 = new THREE.TorusGeometry(15, 3, 10, 50);
+  var geom3 = new THREE.TorusGeometry(15, 2, 6, 50);
+  var geom4 = new THREE.TorusGeometry(12, 1, 10, 50);
+  var goem5 = new THREE.SphereGeometry(5, 15, 5);
 
 
   var material = new THREE.MeshPhongMaterial({
@@ -78,10 +85,25 @@ function init() {
   ring.rotation.y=1.5
   torus.add(ring);
 
-  var planet = new THREE.Mesh(geom, mat);
-  planet.scale.x = planet.scale.y = planet.scale.z = 12;
-  torus.add(planet);
+  var ring = new THREE.Mesh(geom4, mat);
+  ring.scale.x = ring.scale.y = ring.scale.z = 10;
+  ring.rotation.z=1.5
+  torus2.add(ring);
 
+  var ring = new THREE.Mesh(geom4, mat);
+  ring.scale.x = ring.scale.y = ring.scale.z = 10;
+  ring.rotation.x=1.5
+  torus2.add(ring);
+
+  var ring = new THREE.Mesh(geom4, mat);
+  ring.scale.x = ring.scale.y = ring.scale.z = 10;
+  ring.rotation.y=1.5
+  torus2.add(ring);
+
+  var planet = new THREE.Mesh(goem5, mat2);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  torus.add(planet);
+  
   var planet = new THREE.Mesh(geom, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
   circle.add(planet);
@@ -130,7 +152,6 @@ lights[2].position.set( -0.75, -1, 0.5 );
 scene.add( lights[0] );
 scene.add( lights[1] );
 scene.add( lights[2] );
-  
   window.addEventListener('resize', onWindowResize, false);
 
 };
@@ -151,9 +172,11 @@ function animate() {
   circle.rotation.z -= 0.0030;
   skelet.rotation.x -= 0.0010;
   skelet.rotation.y += 0.0020;
-  torus.position.x=-600
   torus.rotation.x -= 0.010;
   torus.rotation.y += 0.0020;
+  torus2.rotation.x += 0.0200;
+  torus2.rotation.y -= 0.0200;
+  torus2.rotation.z -= 0.0100;
   renderer.clear();
 
   renderer.render( scene, camera )

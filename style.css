@@ -22,18 +22,41 @@ main{
   position: absolute;
   margin-left: 50px;
   margin-right: 50px;
-  margin-top: 8vw;
-  max-width: 800px;
+  margin-top: 100px;
+  font-size: 1.2vw;
 }
 
 header{
   position: fixed;
   display: block;
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  background: linear-gradient(#3f3f3f,#777777);
 }
 
 h1{
-  font-size: 3vw;
+  font-size: 50px;
   text-align: center;
+}
+
+.left{
+  margin-left: 60%;
+  max-width: 90%;
+}
+
+.right{
+  max-width: 40%;
+}
+
+@media (max-width:1000px) {
+  main{
+    font-size: 20px;
+  }
+  .left{
+    max-width: 90%;
+    margin-left: 0%;
+  }
+  .right{
+    max-width: 90%;
+  }
 }
