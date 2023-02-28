@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejs.org/build/three.module.js'
 
-var renderer, scene, camera, composer, circle, skelet, torus, torus2, particle;
+var renderer, scene, camera, composer, circle, skelet, torus, torus2, particle, p1, p2, p3;
 
 window.onload = function() {
   init();
@@ -17,7 +17,7 @@ function init() {
 
   scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
   camera.position.z = 600;
   camera.position.x = -300;
   scene.add(camera);
@@ -27,15 +27,31 @@ function init() {
   torus2 = new THREE.Object3D();
   skelet = new THREE.Object3D();
   particle = new THREE.Object3D();
+  p1 = new THREE.Object3D();
+  p2 = new THREE.Object3D();
+  p3 = new THREE.Object3D();
 
+  torus.position.z=700
+  torus2.position.z=700
   torus.position.x=-600
   torus2.position.x=-600
+
+  p1.position.z=1600
+
+  p2.position.z=2400
+  p2.position.x=-600
+
+  p3.position.z=3600
 
   scene.add(circle);
   scene.add(skelet);
   scene.add(particle);
   scene.add(torus);
   scene.add(torus2);
+
+  scene.add(p1);
+  scene.add(p2);
+  scene.add(p3);
 
   var geometry = new THREE.TetrahedronGeometry(1, 1);
   var geom = new THREE.IcosahedronGeometry(10, 0);
@@ -139,6 +155,18 @@ function init() {
   planet2.scale.x = planet2.scale.y = planet2.scale.z = 10;
   skelet.add(planet2);
 
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  p1.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  p2.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  p3.add(planet);
+
   var ambientLight = new THREE.AmbientLight(0xffffff );
   scene.add(ambientLight);
   
@@ -181,3 +209,10 @@ function animate() {
 
   renderer.render( scene, camera )
 };
+
+function moveCamera(){
+  const t = document.body.getBoundingClientRect().top;
+  camera.position.z=-t*0.5+600;
+}
+
+document.body.onscroll= moveCamera
