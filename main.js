@@ -35,8 +35,8 @@ function init() {
   p2 = new THREE.Object3D();
   p3 = new THREE.Object3D();
 
-  torus.position.z=1000
-  torus2.position.z=1000
+  torus.position.z=2600
+  torus2.position.z=2600
   torus.position.x=-600
   torus2.position.x=-600
   particle2.position.z=1000
@@ -45,7 +45,7 @@ function init() {
   p1.rotation.x=1.5
   particle3.position.z=1800
 
-  p2.position.z=2600
+  p2.position.z=1000
   p2.position.x=-600
   particle4.position.z=2600
 
@@ -74,8 +74,10 @@ function init() {
   var geom2 = new THREE.IcosahedronGeometry(20, 1);
   var geom3 = new THREE.TorusGeometry(15, 2, 6, 50);
   var geom4 = new THREE.TorusGeometry(12, 1, 10, 50);
-  var goem5 = new THREE.SphereGeometry(5, 15, 5);
-  var goem6 = new THREE.TorusGeometry(10, 10, 30, 30);
+  var geom5 = new THREE.SphereGeometry(5, 15, 5);
+  var geom6 = new THREE.TorusGeometry(10, 10, 30, 30);
+  var geom7 = new THREE.TorusKnotGeometry(10, 3, 100, 100);
+  var geom8 = new THREE.CylinderBufferGeometry(1, 1, 30,20,20);
 
 
   var material = new THREE.MeshPhongMaterial({
@@ -165,7 +167,7 @@ function init() {
   ring.rotation.y=1.5
   torus2.add(ring);
 
-  var planet = new THREE.Mesh(goem5, mat2);
+  var planet = new THREE.Mesh(geom5, mat2);
   planet.scale.x = planet.scale.y = planet.scale.z = 5;
   torus.add(planet);
   
@@ -204,23 +206,45 @@ function init() {
   planet2.scale.x = planet2.scale.y = planet2.scale.z = 10;
   skelet.add(planet2);
 
-  var planet = new THREE.Mesh(goem6, mat2);
+  var planet = new THREE.Mesh(geom6, mat2);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
   p1.add(planet);
-  
   var planet = new THREE.Mesh(geom3, mat2);
   planet.scale.x = planet.scale.y = planet.scale.z = 10;
   p1.add(planet);
-
   var planet = new THREE.Mesh(geom, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 5;
   p1.add(planet);
-
-  var planet = new THREE.Mesh(geom, mat);
+  var planet = new THREE.Mesh(geom8, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
   p2.add(planet);
+  planet.rotation.z=0
+  var planet = new THREE.Mesh(geom8, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  planet.rotation.z=1
+  p2.add(planet);
+  var planet = new THREE.Mesh(geom8, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  planet.rotation.z=2
+  p2.add(planet);
+  var planet = new THREE.Mesh(geom8, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  p2.add(planet);
+  planet.rotation.x=0
+  var planet = new THREE.Mesh(geom8, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  planet.rotation.x=1
+  p2.add(planet);
+  var planet = new THREE.Mesh(geom8, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  planet.rotation.x=2
+  p2.add(planet);
+  var planet = new THREE.Mesh(geom5, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  planet.rotation.x=2
+  p2.add(planet);
 
-  var planet = new THREE.Mesh(geom, mat);
+  var planet = new THREE.Mesh(geom7, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
   p3.add(planet);
 
@@ -272,6 +296,12 @@ function animate() {
   torus2.rotation.y -= 0.0200;
   torus2.rotation.z -= 0.0100;
   p1.rotation.z -= 0.0200;
+  p2.rotation.z -= 0.0200;
+  p2.rotation.x -= 0.0200;
+  p2.rotation.z -= 0.0200;
+  p3.rotation.z -= 0.0200;
+  p3.rotation.x += 0.0200;
+  p3.rotation.y -= 0.0200;
   renderer.clear();
 
   renderer.render( scene, camera )
