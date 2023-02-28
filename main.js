@@ -18,7 +18,8 @@ function init() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.z = 400;
+  camera.position.z = 500;
+  camera.position.x = -200;
   scene.add(camera);
 
   circle = new THREE.Object3D();
@@ -29,7 +30,7 @@ function init() {
   scene.add(skelet);
   scene.add(particle);
 
-  var geometry = new THREE.TetrahedronGeometry(2, 1);
+  var geometry = new THREE.TetrahedronGeometry(1, 1);
   var geom = new THREE.IcosahedronGeometry(10, 0);
   var geom2 = new THREE.IcosahedronGeometry(20, 1);
 
@@ -49,7 +50,7 @@ function init() {
 
   var mat = new THREE.MeshPhongMaterial({
     color: 0x111111,
-    shading: THREE.FlatShading
+    shading: THREE.FlatShading,
   });
 
   var mat2 = new THREE.MeshPhongMaterial({
@@ -61,6 +62,33 @@ function init() {
 
   var planet = new THREE.Mesh(geom, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
+  circle.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.z = 250
+  circle.add(planet);
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.z = -250
+  circle.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.x = -250
+  circle.add(planet);
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.x = 250
+  circle.add(planet);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.y = 250
+  circle.add(planet);
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 5;
+  planet.position.y = -250
   circle.add(planet);
 
   var planet2 = new THREE.Mesh(geom2, mat2);
@@ -97,9 +125,10 @@ function animate() {
 
   particle.rotation.x += 0.0010;
   particle.rotation.y -= 0.0100;
-  circle.rotation.x -= 0.0200;
-  circle.rotation.y -= 0.0200;
-  skelet.rotation.x -= 0.0100;
+  circle.rotation.y -= 0.0020;
+  circle.rotation.x -= 0.0010;
+  circle.rotation.z -= 0.0030;
+  skelet.rotation.x -= 0.0010;
   skelet.rotation.y += 0.0020;
   renderer.clear();
 
