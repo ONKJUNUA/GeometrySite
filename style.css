@@ -1,16 +1,39 @@
-html {
-    width: 100%;
-    height: 100%;
-    
-    background: #838383;
-    background: -moz-linear-gradient(top,  #acacac 0%, #3b3b3b 100%);
-    background: -webkit-linear-gradient(top,  #acacac 0%,#3b3b3b 100%);
-    background: linear-gradient(to bottom,  #acacac 0%,#3b3b3b 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a411e8', endColorstr='#8200c9',GradientType=0 );
-    overflow: hidden;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+*{
+  overflow-x: hidden;
+}
   
-  body {
-    margin: 0;
-    padding: 0;
-  }
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  color:#fff;
+}
+
+#canvas{
+  position: fixed;
+  background: #3b3b3b;
+  background: -moz-linear-gradient(top,  #838383 0%, #3b3b3b 100%);
+  background: -webkit-linear-gradient(top,  #838383 0%,#3b3b3b 100%);
+  background: linear-gradient(to bottom,  #838383 0%,#3b3b3b 100%);
+}
+
+main{
+  position: absolute;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 8vw;
+  max-width: 800px;
+}
+
+header{
+  position: fixed;
+  display: block;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+h1{
+  font-size: 3vw;
+  text-align: center;
+}

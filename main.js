@@ -131,7 +131,6 @@ scene.add( lights[0] );
 scene.add( lights[1] );
 scene.add( lights[2] );
   
-
   window.addEventListener('resize', onWindowResize, false);
 
 };
