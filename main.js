@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejs.org/build/three.module.js'
 
-var renderer, scene, camera, composer, circle, skelet, particle;
+var renderer, scene, camera, composer, circle, skelet, torus, particle;
 
 window.onload = function() {
   init();
@@ -17,33 +17,37 @@ function init() {
 
   scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.z = 500;
-  camera.position.x = -200;
+  camera.position.x = -300;
   scene.add(camera);
 
   circle = new THREE.Object3D();
+  torus = new THREE.Object3D();
   skelet = new THREE.Object3D();
   particle = new THREE.Object3D();
 
   scene.add(circle);
   scene.add(skelet);
   scene.add(particle);
+  scene.add(torus);
 
   var geometry = new THREE.TetrahedronGeometry(1, 1);
   var geom = new THREE.IcosahedronGeometry(10, 0);
   var geom2 = new THREE.IcosahedronGeometry(20, 1);
+  var geom3 = new THREE.TorusGeometry(15, 3, 10, 50);
+
 
   var material = new THREE.MeshPhongMaterial({
     color: 0x111111,
     wireframe: true,
-    shading: THREE.FlatShading
+    shading: THREE.FlatShading,
   });
 
   for (var i = 0; i < 1000; i++) {
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-    mesh.position.multiplyScalar(90 + (Math.random() * 700));
+    mesh.position.multiplyScalar(90 + (Math.random() * 1000));
     mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
     particle.add(mesh);
   }
@@ -57,8 +61,26 @@ function init() {
     color: 0x111111,
     wireframe: true,
     side: THREE.DoubleSide
-
   });
+
+  var ring = new THREE.Mesh(geom3, mat2);
+  ring.scale.x = ring.scale.y = ring.scale.z = 15;
+  ring.rotation.z=1.5
+  torus.add(ring);
+
+  var ring = new THREE.Mesh(geom3, mat2);
+  ring.scale.x = ring.scale.y = ring.scale.z = 15;
+  ring.rotation.x=1.5
+  torus.add(ring);
+
+  var ring = new THREE.Mesh(geom3, mat2);
+  ring.scale.x = ring.scale.y = ring.scale.z = 15;
+  ring.rotation.y=1.5
+  torus.add(ring);
+
+  var planet = new THREE.Mesh(geom, mat);
+  planet.scale.x = planet.scale.y = planet.scale.z = 12;
+  torus.add(planet);
 
   var planet = new THREE.Mesh(geom, mat);
   planet.scale.x = planet.scale.y = planet.scale.z = 15;
@@ -130,6 +152,9 @@ function animate() {
   circle.rotation.z -= 0.0030;
   skelet.rotation.x -= 0.0010;
   skelet.rotation.y += 0.0020;
+  torus.position.x=-600
+  torus.rotation.x -= 0.010;
+  torus.rotation.y += 0.0020;
   renderer.clear();
 
   renderer.render( scene, camera )
