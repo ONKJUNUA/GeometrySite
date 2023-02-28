@@ -57,6 +57,17 @@ blockquote{
   font-size: 20px;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background:#333;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
 
 @media (max-width:1000px) {
   main{
